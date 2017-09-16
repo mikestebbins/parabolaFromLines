@@ -5,12 +5,12 @@ http://mathworld.wolfram.com/Parabola.html
 
 */
 
-int numberOfLines = 10;
+int numberOfLines = 25;
 
-int[] line1pointsX = new int[numberOfLines];
-int[] line2pointsX = new int[numberOfLines];
-int[] line1pointsY = new int[numberOfLines];
-int[] line2pointsY = new int[numberOfLines];
+int[] lineApointsX = new int[numberOfLines];
+int[] lineBpointsX = new int[numberOfLines];
+int[] lineApointsY = new int[numberOfLines];
+int[] lineBpointsY = new int[numberOfLines];
 
 int xVal1;
 int xVal2;
@@ -21,7 +21,7 @@ int yVal2;
 int yVal3;
 
 void setup() {
-  size(640, 360);
+  size(800, 450);
   
   xVal1 = int(random(width/2,width));
   yVal1 = int(random(0,height/2));
@@ -43,40 +43,50 @@ void setup() {
   line(xVal2,yVal2,xVal3,yVal3);
   
   strokeWeight(5);
-  stroke(255,0,0);
   
-  int lengthLine1X = xVal1 - xVal2;
+  int lengthLineAX = xVal1 - xVal2;
   int lengthLinex2X = xVal3 - xVal2;
   
-  int deltaLine1X = int(lengthLine1X / numberOfLines);  
-  int deltaLine2X = int(lengthLinex2X / numberOfLines);
+  int deltaLineAX = int(lengthLineAX / numberOfLines);  
+  int deltaLineBX = int(lengthLinex2X / numberOfLines);
   
-  line1pointsX[0] = xVal1;
-  line2pointsX[0] = xVal2;
+  lineApointsX[0] = xVal1;
+  lineBpointsX[0] = xVal3;
   
-  line1pointsY[0] = yVal1;
-  line2pointsY[0] = yVal2;
+  lineApointsY[0] = yVal1;
+  lineBpointsY[0] = yVal3;
   
-  ellipse(line1pointsX[0],line1pointsY[0],2,2);
-
-  float slopeLine1 = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
-  println(yVal1);
-  println(yVal2);
-  println(xVal1);
-  println(xVal2);
-  println(slopeLine1);
-  float slopeLine2 = (yVal3 - yVal2) / (xVal3 - xVal2);
+  //stroke(255,0,0); 
+  fill(255,0,0);  
+  ellipse(lineApointsX[0],lineApointsY[0],2,2);
+  //stroke(0,0,255);
+  fill(0,0,255);   
+  ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
+ 
+  float slopeLineA = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
+  float slopeLineB = (yVal3 - yVal2) / (1.0 * (xVal3 - xVal2));
   
-  float bLine1 = yVal1 - slopeLine1 * xVal1;
-  float bLine2 = yVal3 - slopeLine2 * xVal3;
+  // y = m * x + b
+  
+  float bLineA = yVal1 - slopeLineA * xVal1;
+  float bLineB = yVal3 - slopeLineB * xVal3;
    
   for (int i=1; i<numberOfLines; i++)  {
-    line1pointsX[i] = line1pointsX[i-1] - deltaLine1X;
-    line1pointsY[i] = int(line1pointsX[i] * slopeLine1 + bLine1);
+    lineApointsX[i] = lineApointsX[i-1] - deltaLineAX;
+    lineApointsY[i] = int(lineApointsX[i] * slopeLineA + bLineA);
+    lineBpointsX[i] = lineBpointsX[i-1] - deltaLineBX;
+    println(lineBpointsX[i]);
+    lineBpointsY[i] = int(lineBpointsX[i] * slopeLineB + bLineB);    
     strokeWeight(5);
-    stroke(255,0,0);
-    ellipse(line1pointsX[i],line1pointsY[i],2,2);
+    //stroke(255,0,0);
+    fill(255,0,0);
+    ellipse(lineApointsX[i],lineApointsY[i],2,2);
+    //stroke(0,0,255);
+    fill(0,0,255);
+    ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
   }
+  
+  
 
 }
 
