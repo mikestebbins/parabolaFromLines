@@ -26,7 +26,7 @@ int yVal3;
 int counter = 0;
 
 void setup() {
-  size(800, 450);
+  size(1067, 700);
   
   xVal1 = int(random(width/2,width));
   yVal1 = int(random(0,height/2));
@@ -97,7 +97,7 @@ void setup() {
   lineBpointsYrev = reverse(lineBpointsY);  
 
   stroke(255);
-  strokeWeight(2);
+  strokeWeight(1.0);
 
 }
 
