@@ -12,6 +12,9 @@ int[] lineBpointsX = new int[numberOfLines];
 int[] lineApointsY = new int[numberOfLines];
 int[] lineBpointsY = new int[numberOfLines];
 
+int[] lineBpointsXrev = new int[numberOfLines];
+int[] lineBpointsYrev = new int[numberOfLines];
+
 int xVal1;
 int xVal2;
 int xVal3;
@@ -19,6 +22,8 @@ int xVal3;
 int yVal1;
 int yVal2;
 int yVal3;
+
+int counter = 0;
 
 void setup() {
   size(800, 450);
@@ -56,10 +61,10 @@ void setup() {
   lineApointsY[0] = yVal1;
   lineBpointsY[0] = yVal3;
   
-  //stroke(255,0,0); 
+  stroke(255,0,0); 
   fill(255,0,0);  
   ellipse(lineApointsX[0],lineApointsY[0],2,2);
-  //stroke(0,0,255);
+  stroke(0,0,255);
   fill(0,0,255);   
   ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
  
@@ -78,19 +83,33 @@ void setup() {
     println(lineBpointsX[i]);
     lineBpointsY[i] = int(lineBpointsX[i] * slopeLineB + bLineB);    
     strokeWeight(5);
-    //stroke(255,0,0);
+    stroke(255,0,0);
     fill(255,0,0);
     ellipse(lineApointsX[i],lineApointsY[i],2,2);
-    //stroke(0,0,255);
+    stroke(0,0,255);
     fill(0,0,255);
     ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
   }
+
+
   
-  
+  lineBpointsXrev = reverse(lineBpointsX);
+  lineBpointsYrev = reverse(lineBpointsY);  
+
+  stroke(255);
+  strokeWeight(2);
 
 }
 
 void draw() {
+  
+  for (int i = 0; i < numberOfLines; i++)  {
+    float a = lineApointsX[i];
+    float b = lineApointsY[i];
+    float c = lineBpointsXrev[i];
+    float d = lineBpointsYrev[i];
+    line(a,b,c,d);
+  }
   
 }
 
