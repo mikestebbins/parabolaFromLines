@@ -24,10 +24,34 @@ int yVal2;
 int yVal3;
 
 int counter = 0;
+boolean successfulSetup = false;
 
 void setup() {
   size(1067, 700);
+  frameRate(10);
+  runSetup(); 
+}
+
+void draw() {
   
+  if (counter < numberOfLines && successfulSetup == true)  {
+    float a = lineApointsX[counter];
+    float b = lineApointsY[counter];
+    float c = lineBpointsXrev[counter];
+    float d = lineBpointsYrev[counter];
+    line(a,b,c,d);
+    counter++;
+  }
+  
+  else  {
+    counter = 0;
+    successfulSetup = false;
+    runSetup();
+  }
+  
+}
+
+void runSetup()  {
   xVal1 = int(random(width/2,width));
   yVal1 = int(random(0,height/2));
   
@@ -35,116 +59,81 @@ void setup() {
   yVal2 = int(random(0,height/2));
   
   xVal3 = int(random(width/2,width));  
-  yVal3 = int(random(height/2,height));    
+  yVal3 = int(random(height/2,height));  
   
-  background(0);
-  strokeWeight(2.0);
-  strokeJoin(ROUND);
-  strokeCap(ROUND);
+  PVector lineA = new PVector((xVal1 - xVal2), (yVal1 - yVal2));
+  PVector lineB = new PVector((xVal3 - xVal2), (yVal3 - yVal2));
+  float angleBetween = PVector.angleBetween(lineA, lineB);
+  float angleBetweenDeg = degrees(angleBetween);
+  println(angleBetweenDeg);
   
-  stroke(255);
+  if (angleBetweenDeg > 45.0)  { 
   
-  line(xVal1,yVal1,xVal2,yVal2);
-  line(xVal2,yVal2,xVal3,yVal3);
-  
-  strokeWeight(5);
-  
-  int lengthLineAX = xVal1 - xVal2;
-  int lengthLinex2X = xVal3 - xVal2;
-  
-  int deltaLineAX = int(lengthLineAX / numberOfLines);  
-  int deltaLineBX = int(lengthLinex2X / numberOfLines);
-  
-  lineApointsX[0] = xVal1;
-  lineBpointsX[0] = xVal3;
-  
-  lineApointsY[0] = yVal1;
-  lineBpointsY[0] = yVal3;
-  
-  stroke(255,0,0); 
-  fill(255,0,0);  
-  ellipse(lineApointsX[0],lineApointsY[0],2,2);
-  stroke(0,0,255);
-  fill(0,0,255);   
-  ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
- 
-  float slopeLineA = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
-  float slopeLineB = (yVal3 - yVal2) / (1.0 * (xVal3 - xVal2));
-  
-  // y = m * x + b
-  
-  float bLineA = yVal1 - slopeLineA * xVal1;
-  float bLineB = yVal3 - slopeLineB * xVal3;
-   
-  for (int i=1; i<numberOfLines; i++)  {
-    lineApointsX[i] = lineApointsX[i-1] - deltaLineAX;
-    lineApointsY[i] = int(lineApointsX[i] * slopeLineA + bLineA);
-    lineBpointsX[i] = lineBpointsX[i-1] - deltaLineBX;
-    println(lineBpointsX[i]);
-    lineBpointsY[i] = int(lineBpointsX[i] * slopeLineB + bLineB);    
+    background(0);
+    strokeWeight(2.0);
+    strokeJoin(ROUND);
+    strokeCap(ROUND);
+    
+    stroke(255);
+    
+    line(xVal1,yVal1,xVal2,yVal2);
+    line(xVal2,yVal2,xVal3,yVal3);
+    
     strokeWeight(5);
-    stroke(255,0,0);
-    fill(255,0,0);
-    ellipse(lineApointsX[i],lineApointsY[i],2,2);
+    
+    int lengthLineAX = xVal1 - xVal2;
+    int lengthLinex2X = xVal3 - xVal2;
+    
+    int deltaLineAX = int(lengthLineAX / numberOfLines);  
+    int deltaLineBX = int(lengthLinex2X / numberOfLines);
+    
+    lineApointsX[0] = xVal1;
+    lineBpointsX[0] = xVal3;
+    
+    lineApointsY[0] = yVal1;
+    lineBpointsY[0] = yVal3;
+    
+    stroke(255,0,0); 
+    fill(255,0,0);  
+    ellipse(lineApointsX[0],lineApointsY[0],2,2);
     stroke(0,0,255);
-    fill(0,0,255);
-    ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
+    fill(0,0,255);   
+    ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
+   
+    float slopeLineA = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
+    float slopeLineB = (yVal3 - yVal2) / (1.0 * (xVal3 - xVal2));
+    
+    // y = m * x + b
+    
+    float bLineA = yVal1 - slopeLineA * xVal1;
+    float bLineB = yVal3 - slopeLineB * xVal3;
+     
+    for (int i=1; i<numberOfLines; i++)  {
+      lineApointsX[i] = lineApointsX[i-1] - deltaLineAX;
+      lineApointsY[i] = int(lineApointsX[i] * slopeLineA + bLineA);
+      lineBpointsX[i] = lineBpointsX[i-1] - deltaLineBX;
+      lineBpointsY[i] = int(lineBpointsX[i] * slopeLineB + bLineB);    
+      strokeWeight(5);
+      stroke(255,0,0);
+      fill(255,0,0);
+      ellipse(lineApointsX[i],lineApointsY[i],2,2);
+      stroke(0,0,255);
+      fill(0,0,255);
+      ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
+    }
+   
+    lineBpointsXrev = reverse(lineBpointsX);
+    lineBpointsYrev = reverse(lineBpointsY);  
+  
+    stroke(255);
+    strokeWeight(1.0);
+
+    successfulSetup = true;
+ 
   }
-
-
   
-  lineBpointsXrev = reverse(lineBpointsX);
-  lineBpointsYrev = reverse(lineBpointsY);  
-
-  stroke(255);
-  strokeWeight(1.0);
-
-}
-
-void draw() {
-  
-  for (int i = 0; i < numberOfLines; i++)  {
-    float a = lineApointsX[i];
-    float b = lineApointsY[i];
-    float c = lineBpointsXrev[i];
-    float d = lineBpointsYrev[i];
-    line(a,b,c,d);
+  else  {
+    runSetup();
+    successfulSetup = false;
   }
-  
 }
-
-//void setup() {
-//  size(640, 360);
-//  coswave = new float[width];
-//  for (int i = 0; i < width; i++) {
-//    float amount = map(i, 0, width, 0, PI);
-//    coswave[i] = abs(cos(amount));
-//  }
-//  background(255);
-//  noLoop();
-//}
-
-//void draw() {
-
-//  int y1 = 0;
-//  int y2 = height/3;
-//  for (int i = 0; i < width; i++) {
-//    stroke(coswave[i]*255);
-//    line(i, y1, i, y2);
-//  }
-
-//  y1 = y2;
-//  y2 = y1 + y1;
-//  for (int i = 0; i < width; i++) {
-//    stroke(coswave[i]*255 / 4);
-//    line(i, y1, i, y2);
-//  }
-  
-//  y1 = y2;
-//  y2 = height;
-//  for (int i = 0; i < width; i++) {
-//    stroke(255 - coswave[i]*255);
-//    line(i, y1, i, y2);
-//  }
-  
-//}
