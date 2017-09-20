@@ -28,7 +28,7 @@ boolean successfulSetup = false;
 
 void setup() {
   size(1067, 700);
-  frameRate(10);
+  frameRate(30);
   runSetup(); 
 }
 
@@ -48,29 +48,34 @@ void draw() {
     successfulSetup = false;
     runSetup();
   }
-  
 }
 
 void runSetup()  {
-  xVal1 = int(random(width/2,width));
-  yVal1 = int(random(0,height/2));
+  background(0);
   
-  xVal2 = int(random(0,width/2));
-  yVal2 = int(random(0,height/2));
+  xVal1 = int(random(0,width));
+  yVal1 = int(random(0,height));
   
-  xVal3 = int(random(width/2,width));  
-  yVal3 = int(random(height/2,height));  
+  xVal2 = int(random(0,width));
+  yVal2 = int(random(0,height));
+  
+  xVal3 = int(random(0,width));  
+  yVal3 = int(random(0,height));  
   
   PVector lineA = new PVector((xVal1 - xVal2), (yVal1 - yVal2));
   PVector lineB = new PVector((xVal3 - xVal2), (yVal3 - yVal2));
   float angleBetween = PVector.angleBetween(lineA, lineB);
   float angleBetweenDeg = degrees(angleBetween);
+  float magLineA = lineA.mag();
+  float magLineB = lineB.mag();  
   println(angleBetweenDeg);
+  println(magLineA);
+  println(magLineB);
   
-  if (angleBetweenDeg > 45.0)  { 
+  if (angleBetweenDeg > 30.0 && angleBetweenDeg < 120.0 && magLineA > 300 && magLineB > 300)  { 
   
-    background(0);
-    strokeWeight(2.0);
+
+    strokeWeight(1.0);
     strokeJoin(ROUND);
     strokeCap(ROUND);
     
@@ -79,7 +84,7 @@ void runSetup()  {
     line(xVal1,yVal1,xVal2,yVal2);
     line(xVal2,yVal2,xVal3,yVal3);
     
-    strokeWeight(5);
+    strokeWeight(1.0);
     
     int lengthLineAX = xVal1 - xVal2;
     int lengthLinex2X = xVal3 - xVal2;
@@ -95,10 +100,10 @@ void runSetup()  {
     
     stroke(255,0,0); 
     fill(255,0,0);  
-    ellipse(lineApointsX[0],lineApointsY[0],2,2);
+    //ellipse(lineApointsX[0],lineApointsY[0],2,2);
     stroke(0,0,255);
     fill(0,0,255);   
-    ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
+    //ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
    
     float slopeLineA = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
     float slopeLineB = (yVal3 - yVal2) / (1.0 * (xVal3 - xVal2));
@@ -113,13 +118,13 @@ void runSetup()  {
       lineApointsY[i] = int(lineApointsX[i] * slopeLineA + bLineA);
       lineBpointsX[i] = lineBpointsX[i-1] - deltaLineBX;
       lineBpointsY[i] = int(lineBpointsX[i] * slopeLineB + bLineB);    
-      strokeWeight(5);
+      strokeWeight(1.0);
       stroke(255,0,0);
       fill(255,0,0);
-      ellipse(lineApointsX[i],lineApointsY[i],2,2);
+      //ellipse(lineApointsX[i],lineApointsY[i],2,2);
       stroke(0,0,255);
       fill(0,0,255);
-      ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
+      //ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
     }
    
     lineBpointsXrev = reverse(lineBpointsX);
