@@ -26,6 +26,8 @@ int yVal3;
 int counter = 0;
 boolean successfulSetup = false;
 
+int sizeOfEllipse = 5;
+
 void setup() {
   size(1067, 700);
   frameRate(30);
@@ -48,6 +50,7 @@ void draw() {
     successfulSetup = false;
     runSetup();
   }
+  delay(100);
 }
 
 void runSetup()  {
@@ -100,10 +103,10 @@ void runSetup()  {
     
     stroke(255,0,0); 
     fill(255,0,0);  
-    //ellipse(lineApointsX[0],lineApointsY[0],2,2);
+    ellipse(lineApointsX[0],lineApointsY[0],sizeOfEllipse,sizeOfEllipse);
     stroke(0,0,255);
     fill(0,0,255);   
-    //ellipse(lineBpointsX[0],lineBpointsY[0],2,2);
+    ellipse(lineBpointsX[0],lineBpointsY[0],sizeOfEllipse,sizeOfEllipse);
    
     float slopeLineA = (yVal1 - yVal2) / (1.0 * (xVal1 - xVal2));
     float slopeLineB = (yVal3 - yVal2) / (1.0 * (xVal3 - xVal2));
@@ -121,10 +124,10 @@ void runSetup()  {
       strokeWeight(1.0);
       stroke(255,0,0);
       fill(255,0,0);
-      //ellipse(lineApointsX[i],lineApointsY[i],2,2);
+      ellipse(lineApointsX[i],lineApointsY[i],sizeOfEllipse,sizeOfEllipse);
       stroke(0,0,255);
       fill(0,0,255);
-      //ellipse(lineBpointsX[i],lineBpointsY[i],2,2);
+      ellipse(lineBpointsX[i],lineBpointsY[i],sizeOfEllipse,sizeOfEllipse);
     }
    
     lineBpointsXrev = reverse(lineBpointsX);
